@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-// const cors = require("cors");
+const cors = require("cors");
 
-// app.use(cors);
+app.use(cors);
 
 const dinosaurs = {
     "tyrannosaurus rex": {
@@ -46,11 +46,11 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.get('/api/dinosaurs', (req, res) => {
+app.get('/api/', (req, res) => {
     res.json(dinosaurs)
 })
 
-app.get("/api/dinosaurs/:name", (req, res) => {
+app.get("/api/:name", (req, res) => {
     const dinosaurName = req.params.name;
     const dinosaur = dinosaurs[dinosaurName];
     if (dinosaur) {
@@ -61,6 +61,6 @@ app.get("/api/dinosaurs/:name", (req, res) => {
 });
 
 const PORT = 8000;
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(`listening on port ${PORT}`);
 });
